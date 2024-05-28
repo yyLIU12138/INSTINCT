@@ -9,7 +9,7 @@ import pandas as pd
 from tqdm import tqdm
 from sklearn.decomposition import PCA
 
-import INSTINCT
+from INSTINCT import *
 
 import warnings
 warnings.filterwarnings("ignore")

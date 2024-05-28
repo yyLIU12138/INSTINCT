@@ -6,7 +6,7 @@ import scanpy as sc
 import episcanpy as epi
 import pandas as pd
 
-import INSTINCT
+from INSTINCT import *
 
 import warnings
 warnings.filterwarnings("ignore")

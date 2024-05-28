@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 from sklearn.decomposition import PCA
 
-import INSTINCT
+from INSTINCT import *
 
 from matplotlib.lines import Line2D
 import matplotlib as mpl

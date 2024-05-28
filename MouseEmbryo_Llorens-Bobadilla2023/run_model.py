@@ -8,7 +8,7 @@ import anndata as ad
 from sklearn.decomposition import PCA
 from sklearn.mixture import GaussianMixture
 
-import INSTINCT
+from INSTINCT import *
 from ..evaluation_utils import cluster_metrics, rep_metrics, knn_cross_validation, match_cluster_labels
 
 import warnings

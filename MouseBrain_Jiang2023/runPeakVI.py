@@ -5,7 +5,7 @@ import anndata as ad
 import scanpy as sc
 import episcanpy as epi
 
-import INSTINCT
+from INSTINCT import *
 
 import warnings
 warnings.filterwarnings("ignore")

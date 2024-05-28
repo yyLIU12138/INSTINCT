@@ -9,7 +9,7 @@ import seaborn as sns
 from sklearn.decomposition import PCA
 from umap.umap_ import UMAP
 
-import INSTINCT
+from INSTINCT import *
 
 from matplotlib.lines import Line2D
 import matplotlib as mpl

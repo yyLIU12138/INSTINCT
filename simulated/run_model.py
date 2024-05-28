@@ -11,7 +11,7 @@ from sklearn.decomposition import PCA
 from sklearn.mixture import GaussianMixture
 from umap.umap_ import UMAP
 
-import INSTINCT
+from INSTINCT import *
 from ..evaluation_utils import match_cluster_labels, cluster_metrics
 from plot_utils import plot_result_simulated
 
