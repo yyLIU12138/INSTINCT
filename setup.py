@@ -6,7 +6,6 @@ __description__ = "INSCTINCT: Multi-sample integration of spatial chromatin acce
 __url__ = "https://github.com/yyLIU12138/INSTINCT"
 __author__ = "Yuyao Liu"
 __author_email__ = "2645751574@qq.com"
-__requires__ = ["requests",]
 
 setup(
     name = __lib_name__,
@@ -16,7 +15,6 @@ setup(
     author = __author__,
     author_email = __author_email__,
     packages = ['INSTINCT'],
-    install_requires = __requires__,
     zip_safe = False,
     include_package_data = True,
 )
