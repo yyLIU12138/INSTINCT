@@ -54,7 +54,7 @@ for j in range(len(cas_list)):
     cas_list[j].obs_names = [x + '_' + slice_name_list[j] for x in cas_list[j].obs_names]
 ```
 
-Merged the peaks.
+Merge the peaks.
 
 ```
 cas_list = INSTINCT.peak_sets_alignment(cas_list)
