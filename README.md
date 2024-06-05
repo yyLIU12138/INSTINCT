@@ -37,6 +37,8 @@ python setup.py build
 python setup.py install
 ```
 
+Installation takes a few minutes.
+
 
 ## Tutorial
 
@@ -119,5 +121,5 @@ INSTINCT_model.train(report_loss=True, report_interval=100)
 INSTINCT_model.eval(cas_list)
 ```
 
-
+Training the model takes about one minute using GPU (RTX 4090D 24GB).
 
