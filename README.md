@@ -55,7 +55,7 @@ warnings.filterwarnings("ignore")
 Load the anndata type data samples into a list.
 
 ```
-data_dir = '../../data/spMOdata/EpiTran_MouseBrain_Jiang2023/preprocessed/'
+data_dir = '../../demo_data/EpiTran_MouseBrain_Jiang2023/'
 slice_name_list = ['E11_0-S1', 'E13_5-S1', 'E15_5-S1', 'E18_5-S1']
 cas_list = [ad.read_h5ad(data_dir + sample + '_atac.h5ad') for sample in slice_name_list]
 for j in range(len(cas_list)):
