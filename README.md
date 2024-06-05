@@ -5,7 +5,7 @@ Multi-sample integration of spatial chromatin accessibility sequencing data via 
 ## System requirement
 The package development version is tested on Windows operating systems. The developmental version of the package has been tested on the following systems:
 
-Linux: Ubuntu 20.04
+Linux: Ubuntu 20.04  
 Windows
 
 
