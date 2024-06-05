@@ -2,6 +2,12 @@
 Multi-sample integration of spatial chromatin accessibility sequencing data via stochastic domain translation
 ![Overview_of_INSTINCT](https://github.com/yyLIU12138/INSTINCT/assets/130898915/de84d937-361b-4083-af29-8b5ea03b58ec)
 
+## System requirement
+The package development version is tested on Windows operating systems. The developmental version of the package has been tested on the following systems:
+
+Linux: Ubuntu 20.04
+Windows
+
 
 ## Installation
 Clone the repository. 
