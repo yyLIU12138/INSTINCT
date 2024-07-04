@@ -49,7 +49,7 @@ cas_list = peak_sets_alignment(cas_list)
 
 # save the merged data
 for idx, adata in enumerate(cas_list):
-    adata.write_h5ad(data_dir + f'group{use_group}_merged/group{use_group}_merged_{slice_name_list[idx]}.h5ad')
+    adata.write_h5ad(data_dir + f'mb_merged/merged_{slice_name_list[idx]}.h5ad')
 
 # load the merged data
 cas_list = [ad.read_h5ad(data_dir + f'mb_merged/merged_{sample}.h5ad') for sample in slice_name_list]
