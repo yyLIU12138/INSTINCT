@@ -27,8 +27,7 @@ conda activate epi_INSTINCT
 Install the required packages.
 
 ```
-pip install -r requirement.txt  # or
-conda env create -f environment.yml
+pip install -r requirement.txt
 ```
 
 Install INSTINCT.
