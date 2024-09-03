@@ -2,7 +2,6 @@ import pickle
 import numpy as np
 import matplotlib.pyplot as plt
 
-from matplotlib.lines import Line2D
 import matplotlib as mpl
 
 from ..evaluation_utils import knn_label_translation

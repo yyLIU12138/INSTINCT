@@ -716,13 +716,7 @@ palette_list <- list(
 filename <- paste(save_dir, 'comparison/methods_mean_separate_scores.txt', sep = '')
 data_mtx <- read.table(filename, header = FALSE)
 
-# mean_9_to_12 <- rowMeans(data_mtx[, 9:12])
-# mean_7_to_8 <- rowMeans(data_mtx[, 7:8])
-# mean_1_to_6 <- rowMeans(data_mtx[, 1:6])
-# mean_1_to_12 <- rowMeans(cbind(mean_9_to_12, mean_7_to_8, mean_1_to_6))
-
 row_names <- c('INSTINCT', 'Scanorama', 'SCALEX', 'PeakVI', 'SEDR', 'STAligner', 'GraphST')
-# data_mtx <- cbind(data_mtx[, 1:6], mean_1_to_6, data_mtx[, 7:8], mean_7_to_8, data_mtx[, 9:12], mean_9_to_12, mean_1_to_12)
 
 data_df <- cbind(row_names, data_mtx)
 colnames(data_df) <- column_id
@@ -743,13 +737,7 @@ g1 = scIB_knit_table(
 filename <- paste(save_dir, 'comparison/methods_median_separate_scores.txt', sep = '')
 data_mtx <- read.table(filename, header = FALSE)
 
-# mean_9_to_12 <- rowMeans(data_mtx[, 9:12])
-# mean_7_to_8 <- rowMeans(data_mtx[, 7:8])
-# mean_1_to_6 <- rowMeans(data_mtx[, 1:6])
-# mean_1_to_12 <- rowMeans(cbind(mean_9_to_12, mean_7_to_8, mean_1_to_6))
-
 row_names <- c('INSTINCT', 'Scanorama', 'SCALEX', 'PeakVI', 'SEDR', 'STAligner', 'GraphST')
-# data_mtx <- cbind(data_mtx[, 1:6], mean_1_to_6, data_mtx[, 7:8], mean_7_to_8, data_mtx[, 9:12], mean_9_to_12, mean_1_to_12)
 
 data_df <- cbind(row_names, data_mtx)
 colnames(data_df) <- column_id

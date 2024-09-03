@@ -27,13 +27,17 @@ def plot_result_simulated(cas_list, result, sp_cmap, model_name, num_clusters, s
         axs[1, i].invert_yaxis()
         axs[1, i].axis('off')
 
-    legend_handles = [
+    legend_handles1 = [
         Line2D([0], [0], marker='o', color='w', markersize=8, markerfacecolor=sp_cmap[f'{i}'], label=f"{i}")
         for i in range(num_clusters)
     ]
-    axs[0, 2].legend(handles=legend_handles,
+    axs[0, 2].legend(handles=legend_handles1,
                      fontsize=8, title='Spot-types', title_fontsize=10, bbox_to_anchor=(1, 1))
-    axs[1, 2].legend(handles=legend_handles,
+    legend_handles2 = [
+        Line2D([0], [0], marker='o', color='w', markersize=8, markerfacecolor=sp_cmap[f'{i}'], label=f"{i}")
+        for i in range(len(list(set(result.obs['my_clusters']))))
+    ]
+    axs[1, 2].legend(handles=legend_handles2,
                      fontsize=8, title='Clusters', title_fontsize=10, bbox_to_anchor=(1, 1))
     save_path = save_root + f'/{model_name}_clustering.pdf'
     if save:
@@ -100,12 +104,87 @@ def plot_result_simulated(cas_list, result, sp_cmap, model_name, num_clusters, s
     if legend:
         legend_handles = [
             Line2D([0], [0], marker='o', color='w', markersize=8, markerfacecolor=sp_cmap[f'{i}'], label=f"{i}")
+            for i in range(len(list(set(result.obs['my_clusters']))))
+        ]
+        plt.legend(handles=legend_handles, fontsize=6, title='Clusters', title_fontsize=6, bbox_to_anchor=(1, 1))
+
+    save_path = save_root + f"/{model_name}_clusters_umap.pdf"
+    if save:
+        plt.savefig(save_path)
+    if show:
+        plt.show()
+
+
+def plot_result_simulated_single(adata, slice_name, sp_cmap, model_name, num_clusters, save_root, sp_embedding,
+                                 frame_color=None, legend=True, save=True, show=False):
+
+    fig, axs = plt.subplots(1, 2, figsize=(7, 2.5))
+
+    real_colors = list(adata.obs['real_spot_clusters'].astype('str').map(sp_cmap))
+    axs[0].scatter(adata.obsm['spatial'][:, 0], adata.obsm['spatial'][:, 1], linewidth=0, s=30,
+                      marker=".", color=real_colors)
+    axs[0].set_title(f'Slice {slice_name} (Ground Truth)', size=10)
+    axs[0].invert_yaxis()
+    axs[0].axis('off')
+
+    cluster_colors = list(adata.obs['my_clusters'].astype('str').map(sp_cmap))
+    axs[1].scatter(adata.obsm['spatial'][:, 0], adata.obsm['spatial'][:, 1],  linewidth=0, s=30,
+                      marker=".", color=cluster_colors)
+    axs[1].set_title(f'Slice {slice_name} (Cluster Results)', size=10)
+    axs[1].invert_yaxis()
+    axs[1].axis('off')
+
+    legend_handles = [
+        Line2D([0], [0], marker='o', color='w', markersize=8, markerfacecolor=sp_cmap[f'{i}'], label=f"{i}")
+        for i in range(num_clusters)
+    ]
+    axs[0].legend(handles=legend_handles, fontsize=8, title='Spot-types', title_fontsize=6, bbox_to_anchor=(0.95, 1))
+    axs[1].legend(handles=legend_handles, fontsize=8, title='Clusters', title_fontsize=6, bbox_to_anchor=(0.95, 1))
+    save_path = save_root + f'/{model_name}_clustering_{slice_name}.pdf'
+    if save:
+        plt.savefig(save_path)
+
+
+    # umap
+    n_spots = adata.shape[0]
+    size = 10000 / n_spots
+
+    order = np.arange(n_spots)
+
+    plt.figure(figsize=(5, 5))
+    if frame_color:
+        plt.rc('axes', edgecolor=frame_color, linewidth=2)
+    plt.scatter(sp_embedding[order, 0], sp_embedding[order, 1], s=size, c=real_colors)
+    plt.tick_params(axis='both', bottom=False, top=False, left=False, right=False,
+                    labelleft=False, labelbottom=False, grid_alpha=0)
+    if legend:
+        legend_handles = [
+            Line2D([0], [0], marker='o', color='w', markersize=8, markerfacecolor=sp_cmap[f'{i}'], label=f"{i}")
+            for i in range(num_clusters)
+        ]
+        plt.legend(handles=legend_handles,
+                   fontsize=8, title='Spot-types', title_fontsize=10, bbox_to_anchor=(1, 1), loc=1)
+
+    save_path = save_root + f"/{model_name}_real_clusters_umap_{slice_name}.pdf"
+    if save:
+        plt.savefig(save_path)
+
+
+    plt.figure(figsize=(5, 5))
+    if frame_color:
+        plt.rc('axes', edgecolor=frame_color, linewidth=2)
+    plt.scatter(sp_embedding[order, 0], sp_embedding[order, 1], s=size, c=cluster_colors)
+    plt.tick_params(axis='both', bottom=False, top=False, left=False, right=False,
+                    labelleft=False, labelbottom=False, grid_alpha=0)
+    if legend:
+        legend_handles = [
+            Line2D([0], [0], marker='o', color='w', markersize=8, markerfacecolor=sp_cmap[f'{i}'], label=f"{i}")
             for i in range(num_clusters)
         ]
         plt.legend(handles=legend_handles,
                    fontsize=8, title='Clusters', title_fontsize=10, bbox_to_anchor=(1, 1), loc=1)
 
-    save_path = save_root + f"/{model_name}_clusters_umap.pdf"
+    save_path = save_root + f"/{model_name}_clusters_umap_{slice_name}.pdf"
     if save:
         plt.savefig(save_path)
     if show:

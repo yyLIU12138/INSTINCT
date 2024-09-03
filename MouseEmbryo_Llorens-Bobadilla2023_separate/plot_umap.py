@@ -6,7 +6,7 @@ import matplotlib.patches as mpatches
 from umap.umap_ import UMAP
 from sklearn.mixture import GaussianMixture
 
-from plot_utils import plot_mouseembryo_3
+from .plot_utils import plot_mouseembryo_3
 
 from ..evaluation_utils import match_cluster_labels
 

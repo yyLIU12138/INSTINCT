@@ -6,7 +6,6 @@ import pandas as pd
 import warnings
 warnings.filterwarnings("ignore")
 
-from matplotlib.lines import Line2D
 import matplotlib as mpl
 mpl.rcParams['pdf.fonttype'] = 42
 mpl.rcParams['ps.fonttype'] = 42

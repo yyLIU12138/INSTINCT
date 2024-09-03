@@ -2,11 +2,10 @@ import os
 import numpy as np
 import anndata as ad
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
 
 from sklearn.decomposition import PCA
 
-from INSTINCT import *
+from ..INSTINCT import *
 
 from matplotlib.lines import Line2D
 import matplotlib as mpl

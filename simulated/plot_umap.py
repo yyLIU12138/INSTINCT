@@ -7,7 +7,7 @@ from sklearn.mixture import GaussianMixture
 from umap.umap_ import UMAP
 
 from ..evaluation_utils import match_cluster_labels
-from plot_utils import plot_result_simulated
+from .plot_utils import plot_result_simulated
 
 import matplotlib as mpl
 mpl.rcParams['pdf.fonttype'] = 42
@@ -42,6 +42,8 @@ num_clusters = 5
 
 models = ['INSTINCT', 'Scanorama', 'SCALEX', 'PeakVI', 'SEDR', 'STAligner', 'GraphST']
 color_list = ['darkviolet', 'chocolate', 'sandybrown', 'peachpuff', 'darkslategray', 'c', 'cyan']
+# models = ['INSTINCT_500', 'INSTINCT_1000', 'Harmony', 'Seurat', 'Harmony_same_input']
+# color_list = ['dodgerblue', 'deepskyblue', 'sienna', 'orangered', 'sienna']
 
 cas_list = [ad.read_h5ad(save_dir + f"filtered_spot_level_slice_{mode}.h5ad") for mode in slice_name_list]
 adata_concat = ad.concat(cas_list, label='slice_index', keys=slice_index_list)
@@ -78,5 +80,5 @@ for j, model_name in enumerate(models):
     sp_embedding = reducer.fit_transform(adata_concat.obsm['latent'])
 
     plot_result_simulated(cas_list, adata_concat, sp_cmap, model_name, num_clusters, save_dir+f'comparison/{model_name}/',
-                          sp_embedding, frame_color=color_list[j], legend=False, save=save, show=False)
+                          sp_embedding, frame_color=color_list[j], legend=False, save=save, show=True)
 

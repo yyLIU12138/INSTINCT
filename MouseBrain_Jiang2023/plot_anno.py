@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 
 from ..evaluation_utils import knn_label_translation
 
-from matplotlib.lines import Line2D
 import matplotlib as mpl
 mpl.rcParams['pdf.fonttype'] = 42
 mpl.rcParams['ps.fonttype'] = 42
@@ -16,6 +15,7 @@ warnings.filterwarnings("ignore")
 
 save_dir = '../../results/MouseBrain_Jiang2023/'
 save = False
+file_format = 'png'
 
 models = ['INSTINCT', 'Scanorama', 'SCALEX', 'PeakVI', 'SEDR', 'STAligner', 'GraphST']
 labels = ['INSTINCT', 'Scanorama', 'SCALEX', 'PeakVI', 'SEDR', 'STAligner', 'GraphST']
@@ -71,7 +71,7 @@ axs.legend(handles=handles, loc=(1.01, 0.35), fontsize=8)
 plt.gcf().subplots_adjust(left=0.1, top=0.9, bottom=0.15, right=0.85)
 
 if save:
-    save_path = save_dir + f"annotation/cross_validation_separate_scores_box_plot.pdf"
+    save_path = save_dir + f"annotation/cross_validation_separate_scores_box_plot.{file_format}"
     plt.savefig(save_path)
 plt.show()
 
@@ -104,7 +104,7 @@ axs.legend(handles=handles, loc=(1.01, 0.35), fontsize=8)
 plt.gcf().subplots_adjust(left=0.1, top=0.9, bottom=0.15, right=0.85)
 
 if save:
-    save_path = save_dir + f"annotation/cross_validation_separate_scores_bar_plot.pdf"
+    save_path = save_dir + f"annotation/cross_validation_separate_scores_bar_plot.{file_format}"
     plt.savefig(save_path)
 plt.show()
 
@@ -140,7 +140,7 @@ axs.set_title(f'Overall Score', fontsize=16)
 plt.gcf().subplots_adjust(left=0.15, top=None, bottom=0.15, right=None)
 
 if save:
-    save_path = save_dir + f"annotation/cross_validation_overall_score_box_plot.pdf"
+    save_path = save_dir + f"annotation/cross_validation_overall_score_box_plot.{file_format}"
     plt.savefig(save_path, dpi=300)
 plt.show()
 
@@ -166,7 +166,7 @@ for i in range(len(cls_list)):
 
 cas_list = [ad.read_h5ad(save_dir + f"filtered_merged_{sample}_atac.h5ad") for sample in slice_name_list]
 adata_concat = ad.concat(cas_list, label='slice_idx', keys=slice_index_list)
-embed = pd.read_csv(save_dir + f'comparison/INSTINCT/INSTINCT_embed_0.csv', header=None).values
+embed = pd.read_csv(save_dir + f'comparison/INSTINCT/INSTINCT_embed_2.csv', header=None).values
 adata_concat.obsm['latent'] = embed
 
 spots_count = [0]

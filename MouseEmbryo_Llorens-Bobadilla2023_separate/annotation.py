@@ -1,11 +1,8 @@
 import os
-import csv
 import pickle
 import numpy as np
 import anndata as ad
 import pandas as pd
-
-from sklearn.decomposition import PCA
 
 from ..evaluation_utils import knn_cross_validation
 

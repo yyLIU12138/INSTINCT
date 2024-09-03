@@ -5,8 +5,7 @@ import matplotlib.pyplot as plt
 from umap.umap_ import UMAP
 from sklearn.mixture import GaussianMixture
 
-from plot_utils import plot_mousebrain
-
+from .plot_utils import plot_mousebrain
 from ..evaluation_utils import match_cluster_labels
 
 from matplotlib.lines import Line2D
@@ -54,10 +53,12 @@ reducer = UMAP(n_neighbors=30, n_components=2, metric="correlation", n_epochs=No
 
 models = ['INSTINCT', 'Scanorama', 'SCALEX', 'PeakVI', 'SEDR', 'STAligner', 'GraphST']
 colors_for_labels = ['darkviolet', 'chocolate', 'sandybrown', 'peachpuff', 'darkslategray', 'c', 'cyan']
+# models = ['INSTINCT_MLP', 'Harmony', 'Seurat', 'Harmony_same_input']
+# colors_for_labels = ['yellowgreen', 'sienna', 'orangered', 'sienna']
 
 slice_name_list = ['E11_0-S1', 'E13_5-S1', 'E15_5-S1', 'E18_5-S1']
 
-cas_list = [ad.read_h5ad(save_dir + f"filtered_merged_{sample}_atac.h5ad") for sample in slice_name_list]
+# cas_list = [ad.read_h5ad(save_dir + f"filtered_merged_{sample}_atac.h5ad") for sample in slice_name_list]
 adata_concat = ad.read_h5ad(save_dir + f"preprocessed_concat_atac.h5ad")
 raw_pca = np.load(save_dir + 'input_matrix_atac.npy')
 sp_embedding = reducer.fit_transform(raw_pca)

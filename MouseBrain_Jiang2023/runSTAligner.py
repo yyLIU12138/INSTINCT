@@ -6,7 +6,7 @@ import numpy as np
 import anndata as ad
 import scanpy as sc
 
-from INSTINCT import *
+from ..INSTINCT import *
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -78,7 +78,7 @@ for j in range(num_iters):
         adata = ad.read_h5ad(save_dir + f"filtered_merged_{sample}_atac.h5ad")
 
         # Constructing the spatial network
-        STAligner.Cal_Spatial_Net(adata, rad_cutoff=150)  # the spatial network are saved in adata.uns[‘adj’]
+        STAligner.Cal_Spatial_Net(adata, rad_cutoff=2.2)  # the spatial network are saved in adata.uns[‘adj’]
 
         # Normalization
         sc.pp.highly_variable_genes(adata, flavor="seurat_v3", n_top_genes=5000)

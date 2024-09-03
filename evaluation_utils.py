@@ -193,6 +193,22 @@ def bio_conservation_metrics(adata, use_rep, label_key, batch_key, k_map=30, thr
     return MAP, cell_type_ASW, isolated_asw, isolated_f1
 
 
+def bio_conservation_metrics_single(adata, use_rep, label_key, k_map=30):
+    if label_key not in adata.obs or use_rep not in adata.obsm:
+        print("KeyError")
+        return None
+
+    adata.obs[label_key] = adata.obs[label_key].astype(str).astype("category")
+    # sc.pp.neighbors(adata, use_rep=use_rep, random_state=1234)
+
+    MAP = mean_average_precision(adata.obsm[use_rep].copy(), adata.obs[label_key], k=k_map)
+    cell_type_ASW = scib.me.silhouette(adata, label_key=label_key, embed=use_rep)
+
+    print('mAP: %.3f, Cell type ASW: %.3f' % (MAP, cell_type_ASW))
+
+    return MAP, cell_type_ASW
+
+
 def batch_correction_metrics(adata, origin_concat, use_rep, label_key, batch_key):
     if label_key not in adata.obs or batch_key not in adata.obs or use_rep not in adata.obsm:
         print("KeyError")

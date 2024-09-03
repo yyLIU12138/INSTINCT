@@ -2,10 +2,9 @@ import pandas as pd
 import anndata as ad
 
 from umap.umap_ import UMAP
-from plot_utils import plot_mousebrain_verti
+from .plot_utils import plot_mousebrain_verti
 from ..evaluation_utils import knn_label_translation
 
-from matplotlib.lines import Line2D
 import matplotlib as mpl
 mpl.rcParams['pdf.fonttype'] = 42
 mpl.rcParams['ps.fonttype'] = 42
@@ -36,7 +35,7 @@ for sample in cas_list:
     spots_count.append(n)
 
 # from sklearn.decomposition import PCA
-# from codes.INSTINCT.utils import preprocess_CAS
+# from ..INSTINCT.utils import preprocess_CAS
 # preprocess_CAS(cas_list, adata_concat, use_fragment_count=True, min_cells_rate=0.03)
 # # pca = PCA(n_components=100, random_state=1234)
 # # input_matrix = pca.fit_transform(adata_concat.X.toarray())

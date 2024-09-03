@@ -1,4 +1,5 @@
 import pickle
+import os
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -10,6 +11,8 @@ import warnings
 warnings.filterwarnings("ignore")
 
 save = False
+
+file_format = 'png'
 
 # scenario 1 to 3
 slice_name_list = [
@@ -24,7 +27,9 @@ name_concat = slice_name_list[0]
 for mode in slice_name_list[1:]:
     name_concat = name_concat + '_' + mode
 
-save_dir = f'../../results/simulated/'
+save_dir = f'../../results/simulated/comparison/'
+if not os.path.exists(save_dir):
+    os.makedirs(save_dir)
 
 slice_index_list = [str(i) for i in range(len(slice_name_list))]
 num_iters = 8
@@ -33,6 +38,9 @@ num_clusters = 5
 models = ['INSTINCT', 'Scanorama', 'SCALEX', 'PeakVI', 'SEDR', 'STAligner', 'GraphST']
 legend = ['INSTINCT', 'Scanorama', 'SCALEX', 'PeakVI', 'SEDR', 'STAligner', 'GraphST']
 color_list = ['darkviolet', 'chocolate', 'sandybrown', 'peachpuff', 'darkslategray', 'c', 'cyan']
+# models = ['INSTINCT', 'Harmony', 'Seurat']
+# legend = ['INSTINCT', 'Harmony', 'Seurat']
+# color_list = ['darkviolet', 'sienna', 'orangered']
 metric_groups = ['Clustering Performance', 'Representation Quality', 'Batch Correction']
 
 
@@ -63,8 +71,8 @@ for scenario in range(1, 4):
 
     for model_name in models:
 
-        with open(save_dir + f'scenario_{scenario}/T_{name_concat}/comparison/'
-                             f'{model_name}/{model_name}_results_dict.pkl', 'rb') as file:
+        with open(f'../../results/simulated/scenario_{scenario}/T_{name_concat}/comparison/'
+                  f'{model_name}/{model_name}_results_dict.pkl', 'rb') as file:
             results_dict = pickle.load(file)
 
         aris.append(results_dict['ARIs'])
@@ -150,6 +158,6 @@ for j in range(len(summary)):
     plt.gcf().subplots_adjust(left=0.07, top=0.9, bottom=0.15, right=0.77)
 
     if save:
-        save_path = save_dir + f"{mode_list[j]}_scenario_1to3_line_chart_{titles[j]}.pdf"
+        save_path = save_dir + f"{mode_list[j]}_scenario_1to3_line_chart_{titles[j]}.{file_format}"
         plt.savefig(save_path)
     plt.show()

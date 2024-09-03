@@ -11,9 +11,9 @@ from sklearn.decomposition import PCA
 from sklearn.mixture import GaussianMixture
 from umap.umap_ import UMAP
 
-from INSTINCT import *
-from ..evaluation_utils import match_cluster_labels, cluster_metrics
-from plot_utils import plot_result_simulated
+from ..INSTINCT import *
+from ..evaluation_utils import match_cluster_labels, cluster_metrics, rep_metrics
+from .plot_utils import plot_result_simulated
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -59,6 +59,7 @@ for i in range(len(slice_name_list)):
     cas_list[i].write_h5ad(save_dir + f"filtered_spot_level_slice_{slice_name_list[i]}.h5ad")
 
 cas_list = [ad.read_h5ad(save_dir + f"filtered_spot_level_slice_{mode}.h5ad") for mode in slice_name_list]
+origin_concat = ad.concat(cas_list, label='slice_index', keys=slice_index_list)
 adata_concat = ad.read_h5ad(save_dir + f"preprocessed_concat.h5ad")
 print(adata_concat.shape)
 
@@ -78,27 +79,7 @@ create_neighbor_graph(cas_list, adata_concat)
 
 sp_cmap = {f'{i}': sns.color_palette()[i] for i in range(num_clusters)}
 
-INSTINCT_model = INSTINCT_Model(cas_list,
-                                adata_concat,
-                                input_mat_key='X_pca',  # the key of the input matrix in adata_concat.obsm
-                                input_dim=100,  # the input dimension
-                                hidden_dims_G=[50],  # hidden dimensions of the encoder and the decoder
-                                latent_dim=30,  # the dimension of latent space
-                                hidden_dims_D=[50],  # hidden dimensions of the discriminator
-                                lambda_adv=1,  # hyperparameter for the adversarial loss
-                                lambda_cls=10,  # hyperparameter for the classification loss
-                                lambda_la=20,  # hyperparameter for the latent loss
-                                lambda_rec=10,  # hyperparameter for the reconstruction loss
-                                seed=1234,  # random seed
-                                learn_rates=[1e-3, 5e-4],  # learning rate
-                                training_steps=[500, 500],  # training_steps
-                                early_stop=False,  # use the latent loss to control the number of training steps
-                                min_steps=500,  # the least number of steps when training the whole model
-                                use_cos=True,  # use cosine similarity to find the nearest neighbors
-                                margin=10,  # the margin of latent loss
-                                alpha=1,  # the hyperparameter for triplet loss
-                                k=50,  # the amount of neighbors to find
-                                device=device)
+INSTINCT_model = INSTINCT_Model(cas_list, adata_concat, seed=1234, device=device)
 
 INSTINCT_model.train(report_loss=True, report_interval=100)
 
@@ -122,7 +103,7 @@ for sample in cas_list:
     n += num
     spots_count.append(n)
 
-gm = GaussianMixture(n_components=num_clusters, covariance_type='tied', random_state=1234)
+gm = GaussianMixture(n_components=num_clusters, covariance_type='tied', n_init=10, random_state=1234)
 y = gm.fit_predict(result.obsm['INSTINCT_latent'], y=None)
 result.obs["gm_clusters"] = pd.Series(y, index=result.obs.index, dtype='category')
 result.obs['my_clusters'] = pd.Series(match_cluster_labels(result.obs['real_spot_clusters'],
@@ -131,6 +112,8 @@ result.obs['my_clusters'] = pd.Series(match_cluster_labels(result.obs['real_spot
 
 ari, ami, nmi, fmi, comp, homo = cluster_metrics(result.obs['real_spot_clusters'],
                                                  result.obs['my_clusters'].tolist())
+map, c_asw, b_asw, b_pcr, kbet, g_conn = rep_metrics(result, origin_concat, use_rep='INSTINCT_latent',
+                                                     label_key='real_spot_clusters', batch_key='slice_index')
 
 for i in range(len(cas_list)):
     cas_list[i].obs['my_clusters'] = result.obs['my_clusters'][spots_count[i]: spots_count[i + 1]]

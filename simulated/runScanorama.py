@@ -3,7 +3,7 @@ import csv
 import torch
 import anndata as ad
 
-from INSTINCT import *
+from ..INSTINCT import *
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -63,3 +63,4 @@ for j in range(num_iters):
         writer.writerows(adata_concat.obsm['X_scanorama'])
 
 print('----------Done----------\n')
+

@@ -7,7 +7,7 @@ import anndata as ad
 import scanpy as sc
 from sklearn.decomposition import PCA
 from tqdm import tqdm
-from INSTINCT import *
+from ..INSTINCT import *
 
 import warnings
 warnings.filterwarnings("ignore")

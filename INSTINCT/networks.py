@@ -159,6 +159,42 @@ class MLPSingleLayer(nn.Module):
         return X
 
 
+class MLPEncoder(nn.Module):
+
+    def __init__(self, input_dim, hidden_dims, latent_dim):
+        super().__init__()
+
+        self.num_layer = len(hidden_dims) + 1
+        self.layer_list = nn.ModuleList()
+
+        if self.num_layer != 1:
+
+            layer = MLPSingleLayer(input_dim, hidden_dims[0])
+            self.layer_list.append(layer)
+
+            if self.num_layer >= 3:
+                for i in range(1, len(hidden_dims)):
+                    layer = MLPSingleLayer(hidden_dims[i - 1], hidden_dims[i])
+                    self.layer_list.append(layer)
+
+            layer = MLPSingleLayer(hidden_dims[-1], latent_dim, is_last=True)
+            self.layer_list.append(layer)
+
+        else:
+            layer = MLPSingleLayer(input_dim, latent_dim, is_last=True)
+            self.layer_list.append(layer)
+
+    def forward(self, node_features):
+
+        Z = self.layer_list[0](node_features)
+
+        if self.num_layer > 1:
+            for i in range(1, len(self.layer_list)):
+                Z = self.layer_list[i](Z)
+
+        return Z
+
+
 class MLPDecoder(nn.Module):
 
     def __init__(self, latent_dim, hidden_dims, output_dim):

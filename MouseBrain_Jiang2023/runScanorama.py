@@ -3,7 +3,7 @@ import csv
 import torch
 import anndata as ad
 
-from INSTINCT import *
+from ..INSTINCT import *
 
 import warnings
 warnings.filterwarnings("ignore")

@@ -199,3 +199,95 @@ def plot_mousebrain_verti(cas_list, adata_concat, ground_truth_key, annotation_k
 
     if plot:
         plt.show()
+
+
+def plot_mousebrain_single(adata, slice_name, ground_truth_key, cluster_key, cluster_to_color_map,
+                           matched_to_color_map, cls_list, sp_embedding, model_name,
+                           frame_color=None, legend=True, save_root=None, save=False, plot=False):
+
+    fig, axs = plt.subplots(1, 2, figsize=(10, 4))
+    fig.suptitle(f'{model_name} Clustering Results ({slice_name})', fontsize=12)
+
+    real_colors = list(adata.obs[ground_truth_key].astype('str').map(cluster_to_color_map))
+    axs[1].scatter(adata.obsm['spatial'][:, 0], adata.obsm['spatial'][:, 1], linewidth=0.5, s=50,
+                   marker=".", color=real_colors, alpha=0.9)
+    axs[1].set_title(f'{slice_name} (Ground Truth)', size=10)
+    axs[1].invert_yaxis()
+    axs[1].axis('off')
+
+    cluster_colors = list(adata.obs[cluster_key].map(matched_to_color_map))
+    axs[0].scatter(adata.obsm['spatial'][:, 0], adata.obsm['spatial'][:, 1], linewidth=0.5, s=50,
+                   marker=".", color=cluster_colors, alpha=0.9)
+    axs[0].set_title(f'{slice_name} (Cluster Results)', size=10)
+    axs[0].invert_yaxis()
+    axs[0].axis('off')
+
+    my_clusters = np.sort(list(set(adata.obs['matched_clusters'])))
+
+    legend_handles1 = [
+        Line2D([0], [0], marker='o', color='w', markersize=8, markerfacecolor=cluster_to_color_map[cluster], label=cluster)
+        for cluster in cls_list
+    ]
+    axs[1].legend(
+        handles=legend_handles1,
+        fontsize=8, title='Spot-types', title_fontsize=6, bbox_to_anchor=(.97, 1))
+    legend_handles2 = [
+        Line2D([0], [0], marker='o', color='w', markersize=8, markerfacecolor=matched_to_color_map[cluster],
+               label=cluster)
+        for cluster in my_clusters
+    ]
+    axs[0].legend(
+        handles=legend_handles2,
+        fontsize=8, title='Clusters', title_fontsize=6, bbox_to_anchor=(.97, 1))
+    plt.gcf().subplots_adjust(left=0.05, top=0.8, bottom=0.1, right=0.75)
+    if save:
+        save_path = save_root + f'{model_name}_clustering_results_{slice_name}.pdf'
+        plt.savefig(save_path)
+
+    # umap
+    n_spots = adata.shape[0]
+    size = 10000 / n_spots
+
+    order = np.arange(n_spots)
+
+    plt.figure(figsize=(5, 5))
+    if frame_color:
+        plt.rc('axes', edgecolor=frame_color, linewidth=2)
+    plt.scatter(sp_embedding[order, 0], sp_embedding[order, 1], s=size, c=real_colors)
+    plt.tick_params(axis='both', bottom=False, top=False, left=False, right=False,
+                    labelleft=False, labelbottom=False, grid_alpha=0)
+    if legend:
+        legend_handles1 = [
+            Line2D([0], [0], marker='o', color='w', markersize=8, markerfacecolor=cluster_to_color_map[cluster],
+                   label=cluster)
+            for cluster in cls_list
+        ]
+        plt.legend(
+            handles=legend_handles1,
+            fontsize=8, title='Spot-types', title_fontsize=6, bbox_to_anchor=(.95, 1))
+
+    save_path = save_root + f"{model_name}_real_clusters_umap_{slice_name}.pdf"
+    if save:
+        plt.savefig(save_path)
+
+    plt.figure(figsize=(5, 5))
+    if frame_color:
+        plt.rc('axes', edgecolor=frame_color, linewidth=2)
+    plt.scatter(sp_embedding[order, 0], sp_embedding[order, 1], s=size, c=cluster_colors)
+    plt.tick_params(axis='both', bottom=False, top=False, left=False, right=False,
+                    labelleft=False, labelbottom=False, grid_alpha=0)
+    if legend:
+        legend_handles2 = [
+            Line2D([0], [0], marker='o', color='w', markersize=8, markerfacecolor=matched_to_color_map[cluster],
+                   label=cluster)
+            for cluster in my_clusters
+        ]
+        plt.legend(
+            handles=legend_handles2,
+            fontsize=8, title='Clusters', title_fontsize=6, bbox_to_anchor=(.95, 1))
+
+    save_path = save_root + f"{model_name}_clusters_umap_{slice_name}.pdf"
+    if save:
+        plt.savefig(save_path)
+    if plot:
+        plt.show()

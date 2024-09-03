@@ -5,8 +5,7 @@ import matplotlib.pyplot as plt
 from umap.umap_ import UMAP
 from sklearn.mixture import GaussianMixture
 
-from plot_utils import plot_mouseembryo_6
-
+from .plot_utils import plot_mouseembryo_6
 from ..evaluation_utils import match_cluster_labels
 
 from matplotlib.lines import Line2D

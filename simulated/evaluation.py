@@ -12,6 +12,8 @@ import warnings
 warnings.filterwarnings("ignore")
 
 scenario = 1
+num_clusters = 5
+num_iters = 8
 
 slice_name_list = [
     'Tech_0_0_Bio_0_0.5',
@@ -28,10 +30,9 @@ for mode in slice_name_list[1:]:
 save_dir = f'../../results/simulated/scenario_{scenario}/T_' + name_concat + '/'
 
 slice_index_list = [str(i) for i in range(len(slice_name_list))]
-num_iters = 8
-num_clusters = 5
 
 models = ['INSTINCT', 'Scanorama', 'SCALEX', 'PeakVI', 'SEDR', 'STAligner', 'GraphST']
+# models = ['INSTINCT_500', 'INSTINCT_1000', 'Harmony', 'Seurat', 'Harmony_same_input']
 
 cas_list = [ad.read_h5ad(save_dir + f"filtered_spot_level_slice_{mode}.h5ad") for mode in slice_name_list]
 origin_concat = ad.concat(cas_list, label='slice_index', keys=slice_index_list)

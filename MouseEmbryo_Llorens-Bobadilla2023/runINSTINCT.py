@@ -6,7 +6,7 @@ import anndata as ad
 
 from sklearn.decomposition import PCA
 
-from INSTINCT import *
+from ..INSTINCT import *
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -69,24 +69,7 @@ for j in range(num_iters):
 
     INSTINCT_model = INSTINCT_Model(cas_list,
                                     adata_concat,
-                                    input_mat_key='X_pca',  # the key of the input matrix in adata_concat.obsm
-                                    input_dim=100,  # the input dimension
-                                    hidden_dims_G=[50],  # hidden dimensions of the encoder and the decoder
-                                    latent_dim=30,  # the dimension of latent space
-                                    hidden_dims_D=[50],  # hidden dimensions of the discriminator
-                                    lambda_adv=1,  # hyperparameter for the adversarial loss
-                                    lambda_cls=10,  # hyperparameter for the classification loss
-                                    lambda_la=20,  # hyperparameter for the latent loss
-                                    lambda_rec=10,  # hyperparameter for the reconstruction loss
-                                    seed=1234+j,  # random seed
-                                    learn_rates=[1e-3, 5e-4],  # learning rate
-                                    training_steps=[500, 500],  # training_steps
-                                    early_stop=False,  # use the latent loss to control the number of training steps
-                                    min_steps=500,  # the least number of steps when training the whole model
-                                    use_cos=True,  # use cosine similarity to find the nearest neighbors
-                                    margin=10,  # the margin of latent loss
-                                    alpha=1,  # the hyperparameter for triplet loss
-                                    k=50,  # the amount of neighbors to find
+                                    seed=1234+j,
                                     device=device)
 
     INSTINCT_model.train(report_loss=True, report_interval=100)

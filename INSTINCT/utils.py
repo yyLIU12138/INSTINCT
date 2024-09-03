@@ -35,6 +35,24 @@ def preprocess_CAS(adata_list, adata_concat, binarize=False, use_fragment_count=
         adata_list[i] = adata_list[i][obs_list, var_names]
 
 
+def preprocess_SRT(adata_list, adata_concat, n_top_genes=5000, min_cells=1, min_genes=1):
+
+    sc.pp.filter_genes(adata_concat, min_cells=min_cells)
+    sc.pp.filter_cells(adata_concat, min_genes=min_genes)
+
+    sc.pp.highly_variable_genes(adata_concat, flavor="seurat_v3", n_top_genes=n_top_genes)
+    sc.pp.normalize_total(adata_concat, target_sum=1e4)
+    sc.pp.log1p(adata_concat)
+    adata_concat = adata_concat[:, adata_concat.var['highly_variable']]
+
+    for i in range(len(adata_list)):
+        obs_list = [item for item in adata_list[i].obs_names if item in adata_concat.obs_names]
+        var_names = adata_concat.var_names
+        adata_list[i] = adata_list[i][obs_list, var_names]
+
+    return adata_list, adata_concat
+
+
 def TFIDF(count_mat, type_=2):
     # Perform TF-IDF (count_mat: peak*cell)
     def tfidf1(count_mat):

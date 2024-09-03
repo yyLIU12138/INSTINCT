@@ -9,7 +9,7 @@ import seaborn as sns
 from sklearn.decomposition import PCA
 from umap.umap_ import UMAP
 
-from INSTINCT import *
+from ..INSTINCT import *
 
 from matplotlib.lines import Line2D
 import matplotlib as mpl
@@ -23,7 +23,7 @@ np.random.seed(1234)
 random.seed(1234)
 
 ori_scenario = 1
-scenario = 4
+scenario = 6
 
 # parameters
 num_clusters = 5
@@ -36,9 +36,6 @@ spot_rows = 40
 spot_columns = 50
 
 # assign cell type
-coords_list_4 = []
-coords_list_5 = []
-coords_list_6 = []
 coords0 = [[x, y] for x in range(3*20, 3*40) for y in range(3*15, 3*30)]  # cluster 0
 coords1 = [[x, y] for x in range(3*0, 3*10) for y in range(3*0, 3*40)] + \
           [[x, y] for x in range(3*10, 3*20) for y in range(3*0, 3*10)]  # cluster 1
@@ -50,15 +47,18 @@ coords4 = [[x, y] for x in range(3*10, 3*20) for y in range(3*10, 3*35)] + \
           [[x, y] for x in range(3*20, 3*40) for y in range(3*10, 3*15)] + \
           [[x, y] for x in range(3*20, 3*40) for y in range(3*30, 3*35)]  # cluster 4
 
+coords_list_4 = []
 coords_list_4.append([[x, y] for x in range(3*0, 3*10) for y in range(3*0, 3*40)])
 coords_list_4.append([[x, y] for x in range(3*0, 3*5) for y in range(3*0, 3*40)] +
                      [[x, y] for x in range(3*45, 3*50) for y in range(3*0, 3*40)])
 coords_list_4.append([[x, y] for x in range(3*40, 3*50) for y in range(3*0, 3*40)])
 
+coords_list_5 = []
 coords_list_5.append([])
 coords_list_5.append([])
 coords_list_5.append(coords3)
 
+coords_list_6 = []
 coords_list_6.append([[x, y] for x in range(3*0, 3*10) for y in range(3*0, 3*40)] +
                      [[x, y] for x in range(3*10, 3*20) for y in range(3*0, 3*5)] +
                      [[x, y] for x in range(3*10, 3*15) for y in range(3*5, 3*10)])

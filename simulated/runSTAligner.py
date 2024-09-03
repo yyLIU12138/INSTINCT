@@ -6,7 +6,7 @@ import numpy as np
 import scanpy as sc
 import anndata as ad
 
-from INSTINCT import *
+from ..INSTINCT import *
 
 import warnings
 warnings.filterwarnings("ignore")

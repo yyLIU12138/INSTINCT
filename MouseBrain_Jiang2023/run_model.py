@@ -8,7 +8,7 @@ import anndata as ad
 from sklearn.decomposition import PCA
 from sklearn.mixture import GaussianMixture
 
-from INSTINCT import *
+from ..INSTINCT import *
 from ..evaluation_utils import cluster_metrics, bio_conservation_metrics, batch_correction_metrics, knn_cross_validation, match_cluster_labels
 
 import warnings
@@ -16,6 +16,9 @@ warnings.filterwarnings("ignore")
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 # device = torch.device('cpu')
+
+save = False
+# plot = True
 
 # mouse brain
 data_dir = '../../data/spMOdata/EpiTran_MouseBrain_Jiang2023/preprocessed/'
@@ -52,10 +55,12 @@ for j in range(len(cas_list)):
 # concatenation
 adata_concat = ad.concat(cas_list, label="slice_name", keys=slice_name_list)
 # adata_concat.obs_names_make_unique()
+print(adata_concat.shape)
 
 # preprocess CAS data
 print('Start preprocessing')
 preprocess_CAS(cas_list, adata_concat, use_fragment_count=True, min_cells_rate=0.03)
+print(adata_concat.shape)
 print('Done!')
 
 adata_concat.write_h5ad(save_dir + f"preprocessed_concat_atac.h5ad")
@@ -63,7 +68,7 @@ for i in range(len(slice_name_list)):
     cas_list[i].write_h5ad(save_dir + f"filtered_merged_{slice_name_list[i]}_atac.h5ad")
 
 cas_list = [ad.read_h5ad(save_dir + f"filtered_merged_{sample}_atac.h5ad") for sample in slice_name_list]
-origin_concat = ad.concat(cas_list, label="slice_idx", keys=slice_index_list)
+origin_concat = ad.concat(cas_list, label="slice_name", keys=slice_name_list)
 adata_concat = ad.read_h5ad(save_dir + f"preprocessed_concat_atac.h5ad")
 
 print(f'Applying PCA to reduce the feature dimension to 100 ...')
@@ -85,41 +90,22 @@ for sample in cas_list:
     n += num
     spots_count.append(n)
 
-INSTINCT_model = INSTINCT_Model(cas_list,
-                                adata_concat,
-                                input_mat_key='X_pca',  # the key of the input matrix in adata_concat.obsm
-                                input_dim=100,  # the input dimension
-                                hidden_dims_G=[50],  # hidden dimensions of the encoder and the decoder
-                                latent_dim=30,  # the dimension of latent space
-                                hidden_dims_D=[50],  # hidden dimensions of the discriminator
-                                lambda_adv=1,  # hyperparameter for the adversarial loss
-                                lambda_cls=10,  # hyperparameter for the classification loss
-                                lambda_la=20,  # hyperparameter for the latent loss
-                                lambda_rec=10,  # hyperparameter for the reconstruction loss
-                                seed=1236,  # random seed
-                                learn_rates=[1e-3, 5e-4],  # learning rate
-                                training_steps=[500, 500],  # training_steps
-                                early_stop=False,  # use the latent loss to control the number of training steps
-                                min_steps=500,  # the least number of steps when training the whole model
-                                use_cos=True,  # use cosine similarity to find the nearest neighbors
-                                margin=10,  # the margin of latent loss
-                                alpha=1,  # the hyperparameter for triplet loss
-                                k=50,  # the amount of neighbors to find
-                                device=device)
+INSTINCT_model = INSTINCT_Model(cas_list, adata_concat, device=device)
 
 INSTINCT_model.train(report_loss=True, report_interval=100)
 
 INSTINCT_model.eval(cas_list)
 
-result = ad.concat(cas_list, label="slice_idx", keys=slice_index_list)
+result = ad.concat(cas_list, label="slice_name", keys=slice_name_list)
 
-with open(save_dir + 'INSTINCT_embed.csv', 'w', newline='') as file:
-    writer = csv.writer(file)
-    writer.writerows(result.obsm['INSTINCT_latent'])
+if save:
+    with open(save_dir + 'INSTINCT_embed.csv', 'w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerows(result.obsm['INSTINCT_latent'])
 
-with open(save_dir + 'INSTINCT_noise_embed.csv', 'w', newline='') as file:
-    writer = csv.writer(file)
-    writer.writerows(result.obsm['INSTINCT_latent_noise'])
+    with open(save_dir + 'INSTINCT_noise_embed.csv', 'w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerows(result.obsm['INSTINCT_latent_noise'])
 
 gm = GaussianMixture(n_components=16, covariance_type='tied', random_state=1234)
 y = gm.fit_predict(result.obsm['INSTINCT_latent'], y=None)
@@ -131,13 +117,50 @@ result.obs['matched_clusters'] = pd.Series(match_cluster_labels(result.obs['Anno
 ari, ami, nmi, fmi, comp, homo = cluster_metrics(result.obs['Annotation_for_Combined'],
                                                  result.obs['matched_clusters'].tolist())
 map, c_asw, i_asw, i_f1 = bio_conservation_metrics(result, use_rep='INSTINCT_latent',
-                                                   label_key='Annotation_for_Combined', batch_key='slice_idx')
+                                                   label_key='Annotation_for_Combined', batch_key='slice_name')
 b_asw, b_pcr, kbet, g_conn = batch_correction_metrics(result, origin_concat, use_rep='INSTINCT_latent',
                                                       label_key='Annotation_for_Combined',
-                                                      batch_key='slice_idx')
+                                                      batch_key='slice_name')
 accu, kappa, mf1, wf1 = knn_cross_validation(result.obsm['INSTINCT_latent'], result.obs['Annotation_for_Combined'],
-                                             k=20, batch_idx=result.obs['slice_idx'])
+                                             k=20, batch_idx=result.obs['slice_name'])
 
 
-
+# cls_list = ['Primary_brain_1', 'Primary_brain_2', 'Midbrain', 'Diencephalon_and_hindbrain', 'Basal_plate_of_hindbrain',
+#             'Subpallium_1', 'Subpallium_2', 'Cartilage_1', 'Cartilage_2', 'Cartilage_3', 'Cartilage_4',
+#             'Mesenchyme', 'Muscle', 'Thalamus', 'DPallm', 'DPallv']
+#
+# colors_for_clusters = ['red', 'tomato', 'chocolate', 'orange', 'goldenrod',
+#                        'b', 'royalblue', 'g', 'limegreen', 'lime', 'springgreen',
+#                        'deepskyblue', 'pink', 'fuchsia', 'yellowgreen', 'olivedrab']
+#
+# order_for_clusters = [11, 12, 9, 7, 0, 13, 14, 1, 2, 3, 4, 8, 10, 15, 5, 6]
+#
+# cluster_to_color_map = {cluster: color for cluster, color in zip(cls_list, colors_for_clusters)}
+# order_to_cluster_map = {order: cluster for order, cluster in zip(order_for_clusters, cls_list)}
+#
+# from umap.umap_ import UMAP
+# reducer = UMAP(n_neighbors=30, n_components=2, metric="correlation", n_epochs=None, learning_rate=1.0,
+#                min_dist=0.3, spread=1.0, set_op_mix_ratio=1.0, local_connectivity=1, repulsion_strength=1,
+#                negative_sample_rate=5, a=None, b=None, random_state=1234, metric_kwds=None,
+#                angular_rp_forest=False, verbose=False)
+#
+# gm = GaussianMixture(n_components=len(cls_list), covariance_type='tied', random_state=1234)
+# y = gm.fit_predict(result.obsm['INSTINCT_latent'], y=None)
+# result.obs["gm_clusters"] = pd.Series(y, index=result.obs.index, dtype='category')
+# result.obs['matched_clusters'] = pd.Series(match_cluster_labels(
+#     result.obs['Annotation_for_Combined'], result.obs["gm_clusters"]),
+#     index=result.obs.index, dtype='category')
+# my_clusters = np.sort(list(set(result.obs['matched_clusters'])))
+# matched_colors = [cluster_to_color_map[order_to_cluster_map[order]] for order in my_clusters]
+# matched_to_color_map = {matched: color for matched, color in zip(my_clusters, matched_colors)}
+#
+# for i in range(len(cas_list)):
+#     cas_list[i].obs['matched_clusters'] = result.obs['matched_clusters'][spots_count[i]:spots_count[i+1]]
+#
+# sp_embedding = reducer.fit_transform(result.obsm['INSTINCT_latent'])
+#
+# from .plot_utils import plot_mousebrain
+# plot_mousebrain(cas_list, result, 'Annotation_for_Combined', 'matched_clusters', 'INSTINCT', cluster_to_color_map,
+#                 matched_to_color_map, my_clusters, slice_name_list, cls_list, sp_embedding, save_root=save_dir,
+#                 frame_color='darkviolet', save=save, plot=plot)
 

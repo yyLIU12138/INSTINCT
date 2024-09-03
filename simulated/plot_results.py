@@ -15,6 +15,7 @@ np.random.seed(1234)
 save = False
 
 scenario = 1
+file_format = 'png'
 
 slice_name_list = [
     'Tech_0_0_Bio_0_0.5',
@@ -112,7 +113,7 @@ axs.spines['right'].set_visible(False)
 axs.spines['left'].set_linewidth(1)
 axs.spines['bottom'].set_linewidth(1)
 
-axs.set_xticks([3 + 8 * i for i in range(6)])
+axs.set_xticks([(len(models)-1)/2 + (len(models)+1) * i for i in range(6)])
 axs.set_xticklabels(metric_list[0:6], fontsize=12)
 axs.tick_params(axis='y', labelsize=12)
 
@@ -122,7 +123,7 @@ axs.legend(handles=handles, loc=(1, 0.55), fontsize=10)
 plt.gcf().subplots_adjust(left=0.1, top=0.9, bottom=0.15, right=0.85)
 
 if save:
-    save_path = save_dir + f"comparison/methods_clustering_performance_separate_scores_box_plot.pdf"
+    save_path = save_dir + f"comparison/methods_clustering_performance_separate_scores_box_plot.{file_format}"
     plt.savefig(save_path, dpi=500)
 plt.show()
 
@@ -144,7 +145,7 @@ axs.spines['right'].set_visible(False)
 axs.spines['left'].set_linewidth(1)
 axs.spines['bottom'].set_linewidth(1)
 
-axs.set_xticks([3 + 8 * i for i in range(2)])
+axs.set_xticks([(len(models)-1)/2 + (len(models)+1) * i for i in range(2)])
 axs.set_xticklabels(metric_list[6:8], fontsize=12)
 axs.tick_params(axis='y', labelsize=12)
 
@@ -154,7 +155,7 @@ axs.legend(handles=handles, loc='lower left', fontsize=10)
 plt.gcf().subplots_adjust(left=0.1, top=0.9, bottom=0.15, right=None)
 
 if save:
-    save_path = save_dir + f"comparison/methods_representation_quality_separate_scores_box_plot.pdf"
+    save_path = save_dir + f"comparison/methods_representation_quality_separate_scores_box_plot.{file_format}"
     plt.savefig(save_path, dpi=500)
 plt.show()
 
@@ -176,7 +177,7 @@ axs.spines['right'].set_visible(False)
 axs.spines['left'].set_linewidth(1)
 axs.spines['bottom'].set_linewidth(1)
 
-axs.set_xticks([3 + 8 * i for i in range(4)])
+axs.set_xticks([(len(models)-1)/2 + (len(models)+1) * i for i in range(4)])
 axs.set_xticklabels(metric_list[8:12], fontsize=12)
 axs.tick_params(axis='y', labelsize=12)
 
@@ -186,7 +187,7 @@ axs.legend(handles=handles, loc='lower right', fontsize=10)
 plt.gcf().subplots_adjust(left=0.1, top=0.9, bottom=0.15, right=None)
 
 if save:
-    save_path = save_dir + f"comparison/methods_batch_correction_separate_scores_box_plot.pdf"
+    save_path = save_dir + f"comparison/methods_batch_correction_separate_scores_box_plot.{file_format}"
     plt.savefig(save_path, dpi=500)
 plt.show()
 
@@ -209,7 +210,7 @@ axs.spines['right'].set_visible(False)
 axs.spines['left'].set_linewidth(1)
 axs.spines['bottom'].set_linewidth(1)
 
-axs.set_xticks([3 + 8 * i for i in range(6)])
+axs.set_xticks([(len(models)-1)/2 + (len(models)+1) * i for i in range(6)])
 axs.set_xticklabels(metric_list[0:6], fontsize=12)
 axs.tick_params(axis='y', labelsize=12)
 
@@ -219,7 +220,7 @@ axs.legend(handles=handles, loc=(1, 0.55), fontsize=10)
 plt.gcf().subplots_adjust(left=0.1, top=0.9, bottom=0.15, right=0.85)
 
 if save:
-    save_path = save_dir + f"comparison/methods_clustering_performance_separate_scores_bar_plot.pdf"
+    save_path = save_dir + f"comparison/methods_clustering_performance_separate_scores_bar_plot.{file_format}"
     plt.savefig(save_path, dpi=500)
 plt.show()
 
@@ -240,7 +241,7 @@ axs.spines['right'].set_visible(False)
 axs.spines['left'].set_linewidth(1)
 axs.spines['bottom'].set_linewidth(1)
 
-axs.set_xticks([3 + 8 * i for i in range(2)])
+axs.set_xticks([(len(models)-1)/2 + (len(models)+1) * i for i in range(2)])
 axs.set_xticklabels(metric_list[6:8], fontsize=12)
 axs.tick_params(axis='y', labelsize=12)
 
@@ -250,7 +251,7 @@ axs.legend(handles=handles, loc='lower left', fontsize=10)
 plt.gcf().subplots_adjust(left=0.1, top=0.9, bottom=0.15, right=None)
 
 if save:
-    save_path = save_dir + f"comparison/methods_representation_quality_separate_scores_bar_plot.pdf"
+    save_path = save_dir + f"comparison/methods_representation_quality_separate_scores_bar_plot.{file_format}"
     plt.savefig(save_path, dpi=500)
 plt.show()
 
@@ -271,7 +272,7 @@ axs.spines['right'].set_visible(False)
 axs.spines['left'].set_linewidth(1)
 axs.spines['bottom'].set_linewidth(1)
 
-axs.set_xticks([3 + 8 * i for i in range(4)])
+axs.set_xticks([(len(models)-1)/2 + (len(models)+1) * i for i in range(4)])
 axs.set_xticklabels(metric_list[8:12], fontsize=12)
 axs.tick_params(axis='y', labelsize=12)
 
@@ -281,7 +282,7 @@ axs.legend(handles=handles, loc='lower right', fontsize=10)
 plt.gcf().subplots_adjust(left=0.1, top=0.9, bottom=0.15, right=None)
 
 if save:
-    save_path = save_dir + f"comparison/methods_batch_correction_separate_scores_bar_plot.pdf"
+    save_path = save_dir + f"comparison/methods_batch_correction_separate_scores_bar_plot.{file_format}"
     plt.savefig(save_path, dpi=500)
 plt.show()
 
@@ -379,7 +380,7 @@ for k in range(len(mtx_list)):
     plt.gcf().subplots_adjust(left=None, top=0.9, bottom=0.1, right=None)
 
     if save:
-        save_path = save_dir + f"comparison/methods_{type_list[k]}_separate_scores_rank_plot.pdf"
+        save_path = save_dir + f"comparison/methods_{type_list[k]}_separate_scores_rank_plot.{file_format}"
         plt.savefig(save_path, dpi=500)
     plt.show()
 
@@ -421,7 +422,7 @@ for k in range(len(metric_groups)):
     axs.set_title(f'{metric_groups[k]}', fontsize=16)
 
     if save:
-        save_path = save_dir + f"comparison/methods_{metric_groups[k]}_score_box_plot.pdf"
+        save_path = save_dir + f"comparison/methods_{metric_groups[k]}_score_box_plot.{file_format}"
         plt.savefig(save_path, dpi=300)
 plt.show()
 
@@ -468,7 +469,7 @@ for k in range(len(metric_groups)):
     axs.set_title(f'{metric_groups[k]}', fontsize=16)
 
     if save:
-        save_path = save_dir + f"comparison/methods_{metric_groups[k]}_score_bar_plot.pdf"
+        save_path = save_dir + f"comparison/methods_{metric_groups[k]}_score_bar_plot.{file_format}"
         plt.savefig(save_path, dpi=300)
 plt.show()
 
@@ -505,6 +506,6 @@ for j, d in enumerate(overall_scores):
 axs.set_title(f'Overall Score', fontsize=16)
 
 if save:
-    save_path = save_dir + f"comparison/methods_overall_score_box_plot.pdf"
+    save_path = save_dir + f"comparison/methods_overall_score_box_plot.{file_format}"
     plt.savefig(save_path, dpi=300)
 plt.show()

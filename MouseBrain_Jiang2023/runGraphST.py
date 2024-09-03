@@ -6,7 +6,7 @@ import anndata as ad
 
 from sklearn.decomposition import PCA
 
-from INSTINCT import *
+from ..INSTINCT import *
 
 import warnings
 warnings.filterwarnings("ignore")

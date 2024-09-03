@@ -13,6 +13,7 @@ warnings.filterwarnings("ignore")
 
 save_dir = '../../results/MouseBrain_Jiang2023/'
 save = False
+file_format = 'png'
 
 models = ['INSTINCT', 'Scanorama', 'SCALEX', 'PeakVI', 'SEDR', 'STAligner', 'GraphST']
 labels1 = ['INSTINCT', 'Scanorama', 'SCALEX', 'PeakVI', 'SEDR', 'STAligner', 'GraphST']
@@ -101,7 +102,7 @@ axs.legend(handles=handles, loc=(1, 0.55), fontsize=10)
 plt.gcf().subplots_adjust(left=0.1, top=0.9, bottom=0.15, right=0.85)
 
 if save:
-    save_path = save_dir + f"comparison/methods_clustering_performance_separate_scores_box_plot.pdf"
+    save_path = save_dir + f"comparison/methods_clustering_performance_separate_scores_box_plot.{file_format}"
     plt.savefig(save_path, dpi=500)
 # plt.show()
 
@@ -133,7 +134,7 @@ axs.tick_params(axis='y', labelsize=12)
 plt.gcf().subplots_adjust(left=0.1, top=0.9, bottom=0.15, right=None)
 
 if save:
-    save_path = save_dir + f"comparison/methods_representation_quality_separate_scores_box_plot.pdf"
+    save_path = save_dir + f"comparison/methods_representation_quality_separate_scores_box_plot.{file_format}"
     plt.savefig(save_path, dpi=500)
 # plt.show()
 
@@ -165,7 +166,7 @@ axs.tick_params(axis='y', labelsize=12)
 plt.gcf().subplots_adjust(left=0.1, top=0.9, bottom=0.15, right=None)
 
 if save:
-    save_path = save_dir + f"comparison/methods_batch_correction_separate_scores_box_plot.pdf"
+    save_path = save_dir + f"comparison/methods_batch_correction_separate_scores_box_plot.{file_format}"
     plt.savefig(save_path, dpi=500)
 plt.show()
 
@@ -198,7 +199,7 @@ axs.legend(handles=handles, loc=(1, 0.55), fontsize=10)
 plt.gcf().subplots_adjust(left=0.1, top=0.9, bottom=0.15, right=0.85)
 
 if save:
-    save_path = save_dir + f"comparison/methods_clustering_performance_separate_scores_bar_plot.pdf"
+    save_path = save_dir + f"comparison/methods_clustering_performance_separate_scores_bar_plot.{file_format}"
     plt.savefig(save_path, dpi=500)
 # plt.show()
 
@@ -229,7 +230,7 @@ axs.tick_params(axis='y', labelsize=12)
 plt.gcf().subplots_adjust(left=0.1, top=0.9, bottom=0.15, right=None)
 
 if save:
-    save_path = save_dir + f"comparison/methods_representation_quality_separate_scores_bar_plot.pdf"
+    save_path = save_dir + f"comparison/methods_representation_quality_separate_scores_bar_plot.{file_format}"
     plt.savefig(save_path, dpi=500)
 # plt.show()
 
@@ -260,7 +261,7 @@ axs.tick_params(axis='y', labelsize=12)
 plt.gcf().subplots_adjust(left=0.1, top=0.9, bottom=0.15, right=None)
 
 if save:
-    save_path = save_dir + f"comparison/methods_batch_correction_separate_scores_bar_plot.pdf"
+    save_path = save_dir + f"comparison/methods_batch_correction_separate_scores_bar_plot.{file_format}"
     plt.savefig(save_path, dpi=500)
 plt.show()
 
@@ -303,7 +304,7 @@ for k in range(len(metric_groups)):
     plt.gcf().subplots_adjust(left=0.15, top=None, bottom=0.15, right=None)
 
     if save:
-        save_path = save_dir + f"comparison/methods_{metric_groups[k]}_score_box_plot.pdf"
+        save_path = save_dir + f"comparison/methods_{metric_groups[k]}_score_box_plot.{file_format}"
         plt.savefig(save_path, dpi=300)
 plt.show()
 
@@ -355,7 +356,7 @@ for k in range(len(metric_groups)):
     plt.gcf().subplots_adjust(left=0.15, top=None, bottom=0.15, right=None)
 
     if save:
-        save_path = save_dir + f"comparison/methods_{metric_groups[k]}_score_bar_plot.pdf"
+        save_path = save_dir + f"comparison/methods_{metric_groups[k]}_score_bar_plot.{file_format}"
         plt.savefig(save_path, dpi=300)
 plt.show()
 
@@ -393,7 +394,7 @@ axs.set_title(f'Overall Score', fontsize=16)
 plt.gcf().subplots_adjust(left=0.15, top=None, bottom=0.15, right=None)
 
 if save:
-    save_path = save_dir + f"comparison/methods_overall_score_box_plot.pdf"
+    save_path = save_dir + f"comparison/methods_overall_score_box_plot.{file_format}"
     plt.savefig(save_path, dpi=300)
 plt.show()
 
@@ -488,7 +489,7 @@ for k in range(len(mtx_list)):
     plt.gcf().subplots_adjust(left=None, top=0.9, bottom=0.1, right=None)
 
     if save:
-        save_path = save_dir + f"comparison/methods_{type_list[k]}_separate_scores_rank_plot.pdf"
+        save_path = save_dir + f"comparison/methods_{type_list[k]}_separate_scores_rank_plot.{file_format}"
         plt.savefig(save_path, dpi=500)
     plt.show()
 
@@ -566,7 +567,7 @@ axs.legend(handles=handles, loc='lower right', fontsize=10)
 plt.gcf().subplots_adjust(left=0.1, top=0.9, bottom=0.15, right=None)
 
 if save:
-    save_path = save_dir + f"comparison/input_types_clustering_performance_separate_scores_box_plot.pdf"
+    save_path = save_dir + f"comparison/input_types_clustering_performance_separate_scores_box_plot.{file_format}"
     plt.savefig(save_path, dpi=500)
 plt.show()
 
@@ -598,7 +599,7 @@ axs.legend(handles=handles, loc='lower right', fontsize=10)
 plt.gcf().subplots_adjust(left=0.1, top=0.9, bottom=0.15, right=None)
 
 if save:
-    save_path = save_dir + f"comparison/input_types_representation_quality_separate_scores_box_plot.pdf"
+    save_path = save_dir + f"comparison/input_types_representation_quality_separate_scores_box_plot.{file_format}"
     plt.savefig(save_path, dpi=500)
 plt.show()
 
@@ -630,7 +631,7 @@ axs.legend(handles=handles, loc='lower right', fontsize=10)
 plt.gcf().subplots_adjust(left=0.1, top=0.9, bottom=0.15, right=None)
 
 if save:
-    save_path = save_dir + f"comparison/input_types_batch_correction_separate_scores_box_plot.pdf"
+    save_path = save_dir + f"comparison/input_types_batch_correction_separate_scores_box_plot.{file_format}"
     plt.savefig(save_path, dpi=500)
 plt.show()
 
@@ -663,7 +664,7 @@ axs.legend(handles=handles, loc='lower right', fontsize=10)
 plt.gcf().subplots_adjust(left=0.1, top=0.9, bottom=0.15, right=None)
 
 if save:
-    save_path = save_dir + f"comparison/input_types_clustering_performance_separate_scores_bar_plot.pdf"
+    save_path = save_dir + f"comparison/input_types_clustering_performance_separate_scores_bar_plot.{file_format}"
     plt.savefig(save_path, dpi=500)
 plt.show()
 
@@ -694,7 +695,7 @@ axs.legend(handles=handles, loc='lower right', fontsize=10)
 plt.gcf().subplots_adjust(left=0.1, top=0.9, bottom=0.15, right=None)
 
 if save:
-    save_path = save_dir + f"comparison/input_types_representation_quality_separate_scores_bar_plot.pdf"
+    save_path = save_dir + f"comparison/input_types_representation_quality_separate_scores_bar_plot.{file_format}"
     plt.savefig(save_path, dpi=500)
 plt.show()
 
@@ -725,7 +726,7 @@ axs.legend(handles=handles, loc='lower right', fontsize=10)
 plt.gcf().subplots_adjust(left=0.1, top=0.9, bottom=0.15, right=None)
 
 if save:
-    save_path = save_dir + f"comparison/input_types_batch_correction_separate_scores_bar_plot.pdf"
+    save_path = save_dir + f"comparison/input_types_batch_correction_separate_scores_bar_plot.{file_format}"
     plt.savefig(save_path, dpi=500)
 plt.show()
 
@@ -768,7 +769,7 @@ for k in range(len(metric_groups)):
     plt.gcf().subplots_adjust(left=0.15, top=None, bottom=None, right=None)
 
     if save:
-        save_path = save_dir + f"comparison/input_types_{metric_groups[k]}_score_box_plot.pdf"
+        save_path = save_dir + f"comparison/input_types_{metric_groups[k]}_score_box_plot.{file_format}"
         plt.savefig(save_path, dpi=300)
 plt.show()
 
@@ -820,7 +821,7 @@ for k in range(len(metric_groups)):
     plt.gcf().subplots_adjust(left=0.15, top=None, bottom=None, right=None)
 
     if save:
-        save_path = save_dir + f"comparison/input_types_{metric_groups[k]}_score_bar_plot.pdf"
+        save_path = save_dir + f"comparison/input_types_{metric_groups[k]}_score_bar_plot.{file_format}"
         plt.savefig(save_path, dpi=300)
 plt.show()
 
@@ -858,7 +859,7 @@ axs.set_title(f'Overall Score', fontsize=16)
 plt.gcf().subplots_adjust(left=0.15, top=None, bottom=None, right=None)
 
 if save:
-    save_path = save_dir + f"comparison/input_types_overall_score_box_plot.pdf"
+    save_path = save_dir + f"comparison/input_types_overall_score_box_plot.{file_format}"
     plt.savefig(save_path, dpi=300)
 plt.show()
 

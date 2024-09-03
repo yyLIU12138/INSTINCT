@@ -10,7 +10,7 @@ from sklearn.decomposition import PCA
 from umap.umap_ import UMAP
 from scipy.sparse import csr_matrix, vstack
 
-from INSTINCT import *
+from ..INSTINCT import *
 
 from matplotlib.lines import Line2D
 import matplotlib as mpl
