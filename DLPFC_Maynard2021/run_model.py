@@ -10,7 +10,7 @@ from sklearn.decomposition import PCA
 from sklearn.mixture import GaussianMixture
 
 from ..INSTINCT import *
-from ..evaluation_utils import cluster_metrics, bio_conservation_metrics, batch_correction_metrics, knn_cross_validation, match_cluster_labels
+from ..evaluation_utils import cluster_metrics, rep_metrics, knn_cross_validation, match_cluster_labels
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -110,11 +110,8 @@ for idx in range(len(sample_group_list)):
 
     ari, ami, nmi, fmi, comp, homo = cluster_metrics(result.obs['Manual_Annotation'],
                                                      result.obs['matched_clusters'].tolist())
-    map, c_asw, i_asw, i_f1 = bio_conservation_metrics(result, use_rep='INSTINCT_latent',
-                                                       label_key='Manual_Annotation', batch_key='slice_name')
-    b_asw, b_pcr, kbet, g_conn = batch_correction_metrics(result, origin_concat, use_rep='INSTINCT_latent',
-                                                          label_key='Manual_Annotation',
-                                                          batch_key='slice_name')
+    map, c_asw, b_asw, b_pcr, kbet, g_conn = rep_metrics(result, origin_concat, use_rep='INSTINCT_latent',
+                                                         label_key='Manual_Annotation', batch_key='slice_name')
     accu, kappa, mf1, wf1 = knn_cross_validation(result.obsm['INSTINCT_latent'], result.obs['Manual_Annotation'],
                                                  k=20, batch_idx=result.obs['slice_name'])
 

@@ -11,7 +11,7 @@ from sklearn.decomposition import PCA
 from ..INSTINCT import preprocess_SRT
 from .plot_utils import plot_DLPFC
 
-from codes.evaluation_utils import match_cluster_labels
+from ..evaluation_utils import match_cluster_labels
 
 from matplotlib.lines import Line2D
 import matplotlib as mpl
