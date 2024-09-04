@@ -136,6 +136,3 @@ for i, col in enumerate(list(rna_s2_genes.columns)):
     overlap_count = len(genes_s1.intersection(genes_s2))
     print(f"Label: {col}, Overlap Count: {overlap_count}, Overlap Percentage: {(overlap_count / len(list(genes_s1)) * 100): .2f}%")
 
-
-marker_genes = ['Aldh1l1', 'Fam181a', 'Gucy1b2', 'Dhh', 'Tnni1', 'Myog', 'Col1a2', 'Skint10',
-                'Slc8a2', 'Neurod2', 'Neurod6', 'Lhx5', 'En2', 'Myh7', 'Gad2', 'Dlx1as']
