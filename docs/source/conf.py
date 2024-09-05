@@ -31,7 +31,8 @@ author = 'Yuyao Liu and Zhen li'
 extensions = ['sphinx.ext.autosummary',
     'sphinx_autodoc_typehints',
     'sphinx.ext.napoleon',
-    'nbsphinx'
+    'nbsphinx',
+    'sphinx_rtd_theme'
 ]
 
 # Generate the API documentation when building
