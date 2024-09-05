@@ -62,7 +62,8 @@ exclude_patterns = []
 # a list of builtin themes.
 #
 html_theme = "sphinx_rtd_theme"
-
+# 禁用 Notebook 的执行
+nbsphinx_execute = 'never'
 
 html_theme_options = dict(navigation_depth=4, logo_only=True)  # Only show the logo
 html_logo = "INSTINCT_LOGO.png"
