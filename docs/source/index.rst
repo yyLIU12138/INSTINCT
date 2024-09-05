@@ -3,7 +3,7 @@ INSTINCT: Multi-sample integration of spatial chromatin accessibility sequencing
 
 .. toctree::
    :maxdepth: 2
-   :hidden:
+   :caption: Table of Contents
 
    installation
    notebooks/MISAR-seq_MB/index
