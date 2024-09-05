@@ -4,9 +4,9 @@ Tutorial 1: Analyze MISAR-seq mouse brain (MB) dataset
 .. toctree::
    :maxdepth: 1
 
-   1 Integrating four S1 slices
-   2 Integrating vartically adjacent slices
-   3 Cross-sample annotation
-   4 Gene ontology (GO) analysis
-   5 Expression enrichment analysis
-   6 Partitioned heritability analysis
+   1_Integrating_four_S1_slices
+   2_Integrating_vartically_adjacent_slices
+   3_Cross-sample_annotation
+   4_Gene_ontology_GO_analysis
+   5_Expression_enrichment_analysis
+   6_Partitioned_heritability_analysis
