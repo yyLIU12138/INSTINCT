@@ -41,6 +41,7 @@ Installation takes a few minutes.
 
 
 ## Tutorial
+### Detailed version of tutorials for INSTINCT can be found on the [Read the Docs](https://instinct.readthedocs.io/en/latest/index.html) website.  
 
 Import the package.
 ```
@@ -118,8 +119,6 @@ INSTINCT_model.train(report_loss=True, report_interval=100)
 
 INSTINCT_model.eval(cas_list)
 ```
-
-## Find more details and tutorials of INSTINCT on the [Read the Docs](https://instinct.readthedocs.io/en/latest/) website.
 
 Training the model takes about one minute using GPU (RTX 4090D 24GB).
 
