@@ -2,7 +2,7 @@ INSTINCT: Multi-sample integration of spatial chromatin accessibility sequencing
 =====================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: Table of Contents
 
    installation
