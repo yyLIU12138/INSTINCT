@@ -867,6 +867,8 @@ pops_size = [2000, 2000, 2000, 2000, 2000]  # 设置不同cluster的细胞数目
 # pops_name = [['0', '1', '2', '3', '4', '5', '6', '7',]]  # 输入不同节点的名字，离散模式只需要输入叶子节点的名称就行，注意这里需要与tree_text的前三个顺序保持一致
 # pops_size = [1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000,]  # 设置不同cluster的细胞数目，None则直接取平均
 
+# tree_text = ["((((A:0.2,B:0.2)C:0.2,D:0.4)E:0.5,(F:0.5,G:0.5)H:0.4)R)"]  # continuous
+
 embed_mean_same = 1  # 对embedding非差异特征采样的均值
 embed_sd_same = 0.5  # 对embedding的非差异特征采样的方差
 embed_mean_diff = 1  # 对embedding差异特征采样的均值
